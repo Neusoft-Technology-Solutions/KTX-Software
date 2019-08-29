@@ -135,17 +135,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #if KTX_OPENGL
 
-	#ifdef _WIN32
+    #if defined(__APPLE__)
+	  #include <GLUT/glut.h>
+	  // define missing GL defines
+	  #ifndef GL_TEXTURE_SWIZZLE_RGBA
+	     #define GL_TEXTURE_SWIZZLE_RGBA 0x8E46
+	  #endif
+    #elif defined(_WIN32)
 	  #include <windows.h>
 	  #include <GL/glew.h>
     #elif KTX_USE_GETPROC
-      #include <GL/glew.h>
+	  #include <GL/glew.h>
     #else
-      #define GLCOREARB_PROTOTYPES
-      #include <GL/glcorearb.h>
-	#endif
+	  #define GLCOREARB_PROTOTYPES
+	  #include <GL/glcorearb.h>
+    #endif
 
-	#define GL_APIENTRY APIENTRY
+    #define GL_APIENTRY APIENTRY
     #define KTX_GLFUNCPTRS "gl_funcptrs.h"
 
 #elif KTX_OPENGL_ES1
@@ -157,8 +163,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #elif KTX_OPENGL_ES2
 
+    #if defined(__APPLE__)
+	#include <OpenGLES/ES2/gl.h>
+	#include <OpenGLES/ES2/glext.h>
+	#define GL_CLAMP GL_CLAMP_TO_EDGE
+    #else
 	#include <GLES2/gl2.h>
 	#include <GLES2/gl2ext.h>
+    #endif
 
     #define KTX_GLFUNCPTRS "gles2_funcptrs.h"
 
@@ -167,10 +179,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	#include <GLES3/gl3.h>
 	#include <GLES3/gl3ext.h>
 
-    #define KTX_GLFUNCPTRS "gles3_funcptrs.h"
+	#define KTX_GLFUNCPTRS "gles3_funcptrs.h"
 
 #else
-#error Please #define one of KTX_OPENGL, KTX_OPENGL_ES1, KTX_OPENGL_ES2 or KTX_OPENGL_ES3 as 1
+
+	#error Please #define one of KTX_OPENGL, KTX_OPENGL_ES1, KTX_OPENGL_ES2 or KTX_OPENGL_ES3 as 1
+
 #endif
 
 
