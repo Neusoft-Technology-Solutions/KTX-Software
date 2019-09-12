@@ -1,5 +1,12 @@
+#ifdef __khrplatform_h_
+   #ifndef _KHRPLATFORM_H_SECOND_HEADER_GUARD_
+      #error Someone has #included a different header khrplatform.h from somewhere else which clashes with this one
+   #endif
+#endif
+
 #ifndef __khrplatform_h_
 #define __khrplatform_h_
+#define _KHRPLATFORM_H_SECOND_HEADER_GUARD_
 
 
 #if defined(USE_GLESV2)

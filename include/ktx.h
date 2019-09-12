@@ -1,8 +1,15 @@
 /* -*- tab-width: 4; -*- */
 /* vi: set sw=2 ts=4: */
 
+#ifdef _KTX_H_
+   #ifndef _KTX_H_SECOND_HEADER_GUARD_
+      #error Someone has #included a different header ktx.h from somewhere else which clashes with this one
+   #endif
+#endif
+
 #ifndef _KTX_H_
 #define _KTX_H_
+#define _KTX_H_SECOND_HEADER_GUARD_
 
 /**
  * @file
